@@ -1,12 +1,26 @@
 [gd_scene load_steps=20 format=3 uid="uid://c1fu68v3wu72a"]
 
+[ext_resource type="Shader" uid="uid://0krdi8i5i0v6" path="res://grid_web.tres" id="1_4oxaf"]
 [ext_resource type="Shader" uid="uid://cyeai3wtgkjbj" path="res://normal_color_flat.tres" id="1_5vy62"]
 [ext_resource type="Shader" path="res://normal_color.gdshader" id="1_wydpf"]
 [ext_resource type="Script" path="res://color_from_rot.gd" id="2_ktw4g"]
 [ext_resource type="Shader" path="res://picked_color.gdshader" id="3_npew3"]
 [ext_resource type="Script" path="res://camera_pivot.gd" id="4_8u2f7"]
-[ext_resource type="Shader" uid="uid://dy5n42o7uq0gu" path="res://grid.tres" id="5_wy2ei"]
-[ext_resource type="Texture2D" uid="uid://c8haskaycwcva" path="res://icon.png" id="6_bov46"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dcu7g"]
+render_priority = 0
+shader = ExtResource("1_4oxaf")
+shader_parameter/gridColor = Color(1, 1, 1, 0.568627)
+shader_parameter/fadeStart = 1.0
+shader_parameter/fadeEnd = 10.0
+shader_parameter/unitSize = 1.0
+shader_parameter/subdivisions = 4
+shader_parameter/majorLineThickness = 2.0
+shader_parameter/minorLineThickness = 1.0
+shader_parameter/minorLineAlpha = 0.3
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3i05p"]
+size = Vector2(100, 100)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6hfka"]
 render_priority = 0
@@ -58,20 +72,11 @@ sky = SubResource("Sky_v6dyt")
 ambient_light_source = 1
 reflected_light_source = 1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ms54o"]
-render_priority = 0
-shader = ExtResource("5_wy2ei")
-shader_parameter/gridColor = Color(1, 1, 1, 0.541176)
-shader_parameter/checkerColor = Color(0, 0, 0.0392157, 0)
-shader_parameter/fadeStart = 0.1
-shader_parameter/fadeEnd = 10.0
-shader_parameter/unitSize = 1.0
-shader_parameter/subdivisions = 4
-shader_parameter/majorLineThickness = 2.0
-shader_parameter/minorLineThickness = 1.0
-shader_parameter/minorLineAlpha = 0.253
-
 [node name="root" type="Node3D"]
+
+[node name="grid_web" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_dcu7g")
+mesh = SubResource("PlaneMesh_3i05p")
 
 [node name="sphere_flat" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
@@ -121,11 +126,6 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.82478)
 current = true
 size = 1.2
-
-[node name="grid" type="Sprite3D" parent="camera_pivot/Camera3D"]
-transform = Transform3D(2.43802, 0, 0, 0, 1.75959, -2.98023e-08, 0, 0, 1, 0, -1.19209e-07, -0.904794)
-material_override = SubResource("ShaderMaterial_ms54o")
-texture = ExtResource("6_bov46")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

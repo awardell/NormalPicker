@@ -66,6 +66,5 @@ func tween_to_perspective() -> void:
 	var d := 0.2
 	$Camera3D.projection = Camera3D.PROJECTION_PERSPECTIVE
 	t.tween_property(self, "quaternion", start_rot, d)
-	t.parallel().tween_property($Camera3D/grid, "modulate", Color.WHITE, d)
 	await t.finished
 	state = PERSPECTIVE
