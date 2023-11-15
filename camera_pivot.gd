@@ -51,7 +51,6 @@ func tween_to_orthoganal() -> void:
 	var d := 0.5
 	t.tween_property(self, "quaternion", Quaternion.IDENTITY, d)
 	t.parallel().tween_property($Camera3D, "position", Vector3(0,0,start_zoom), d)
-	t.parallel().tween_property($Camera3D/grid, "modulate", Color.TRANSPARENT, d)
 	await t.finished
 	$Camera3D.projection = Camera3D.PROJECTION_ORTHOGONAL
 	state = ORTHOGANAL

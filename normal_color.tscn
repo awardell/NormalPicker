@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c1fu68v3wu72a"]
+[gd_scene load_steps=21 format=3 uid="uid://c1fu68v3wu72a"]
 
 [ext_resource type="Shader" uid="uid://0krdi8i5i0v6" path="res://grid_web.tres" id="1_4oxaf"]
 [ext_resource type="Shader" uid="uid://cyeai3wtgkjbj" path="res://normal_color_flat.tres" id="1_5vy62"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://color_from_rot.gd" id="2_ktw4g"]
 [ext_resource type="Shader" path="res://picked_color.gdshader" id="3_npew3"]
 [ext_resource type="Script" path="res://camera_pivot.gd" id="4_8u2f7"]
+[ext_resource type="Script" path="res://copy_text.gd" id="7_nosvi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dcu7g"]
 render_priority = 0
@@ -157,6 +158,7 @@ middle_mouse_paste_enabled = false
 drag_and_drop_selection_enabled = false
 flat = true
 select_all_on_focus = true
+script = ExtResource("7_nosvi")
 
 [node name="RGBLabel" type="Label" parent="CanvasLayer"]
 offset_left = 1.0
@@ -182,6 +184,7 @@ middle_mouse_paste_enabled = false
 drag_and_drop_selection_enabled = false
 flat = true
 select_all_on_focus = true
+script = ExtResource("7_nosvi")
 
 [node name="projection-Button" type="Button" parent="CanvasLayer"]
 anchors_preset = 1
