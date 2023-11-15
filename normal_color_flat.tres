@@ -1,0 +1,18 @@
+[gd_resource type="Shader" format=3 uid="uid://cyeai3wtgkjbj"]
+
+[resource]
+code = "shader_type spatial;
+render_mode unshaded;
+
+varying vec3 pos;
+
+void vertex(){
+	pos = (vec4(VERTEX, 1.) * inverse(MODEL_MATRIX)).xyz;
+}
+
+void fragment(){
+	vec3 dpdx = dFdx(pos);
+	vec3 dpdy = dFdy(pos);
+	vec3 color = normalize(cross(dpdy, dpdx));
+	ALBEDO = .5 + .5 * color;
+}"
