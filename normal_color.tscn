@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c1fu68v3wu72a"]
+[gd_scene load_steps=23 format=3 uid="uid://c1fu68v3wu72a"]
 
 [ext_resource type="Shader" uid="uid://0krdi8i5i0v6" path="res://grid_web.tres" id="1_4oxaf"]
 [ext_resource type="Shader" uid="uid://cyeai3wtgkjbj" path="res://normal_color_flat.tres" id="1_5vy62"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" path="res://picked_color.gdshader" id="3_npew3"]
 [ext_resource type="Script" path="res://camera_pivot.gd" id="4_8u2f7"]
 [ext_resource type="Script" path="res://copy_text.gd" id="7_nosvi"]
+[ext_resource type="Script" path="res://mouse_cursor_set.gd" id="8_h2c1u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dcu7g"]
 render_priority = 0
@@ -44,6 +45,9 @@ radial_segments = 128
 rings = 64
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_op1t5"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_k3uyv"]
+radius = 0.51
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4yhut"]
 render_priority = 0
@@ -103,6 +107,14 @@ mesh = SubResource("SphereMesh_r4iqt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="sphere_smooth/StaticBody3D"]
 shape = SubResource("SphereShape3D_op1t5")
+
+[node name="mouse_cursor_set" type="Area3D" parent="."]
+input_ray_pickable = false
+script = ExtResource("8_h2c1u")
+cursor_shape = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mouse_cursor_set"]
+shape = SubResource("SphereShape3D_k3uyv")
 
 [node name="color_control" type="Node3D" parent="."]
 script = ExtResource("2_ktw4g")
