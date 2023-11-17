@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c1fu68v3wu72a"]
+[gd_scene load_steps=30 format=3 uid="uid://c1fu68v3wu72a"]
 
 [ext_resource type="Shader" uid="uid://0krdi8i5i0v6" path="res://grid_web.tres" id="1_4oxaf"]
 [ext_resource type="Shader" uid="uid://cyeai3wtgkjbj" path="res://normal_color_flat.tres" id="1_5vy62"]
@@ -7,7 +7,14 @@
 [ext_resource type="Shader" path="res://picked_color.gdshader" id="3_npew3"]
 [ext_resource type="Script" path="res://camera_pivot.gd" id="4_8u2f7"]
 [ext_resource type="Script" path="res://copy_text.gd" id="7_nosvi"]
-[ext_resource type="Script" path="res://mouse_cursor_set.gd" id="8_h2c1u"]
+[ext_resource type="FontFile" uid="uid://74p3t6aanp60" path="res://FiraCode-VF.ttf" id="7_wbn4l"]
+
+[sub_resource type="GDScript" id="GDScript_x3mbx"]
+script/source = "extends Node3D
+
+func _ready() -> void:
+	Input.set_default_cursor_shape(Input.CURSOR_CROSS)
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dcu7g"]
 render_priority = 0
@@ -46,9 +53,6 @@ rings = 64
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_op1t5"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_k3uyv"]
-radius = 0.51
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4yhut"]
 render_priority = 0
 shader = ExtResource("3_npew3")
@@ -77,7 +81,29 @@ sky = SubResource("Sky_v6dyt")
 ambient_light_source = 1
 reflected_light_source = 1
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_fiort"]
+plane = Plane(0, 0, 1, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_vbkcs"]
+size = Vector2(5, 5)
+
+[sub_resource type="Theme" id="Theme_3ok5r"]
+default_font = ExtResource("7_wbn4l")
+
+[sub_resource type="Theme" id="Theme_kf0ia"]
+default_font = ExtResource("7_wbn4l")
+
+[sub_resource type="Theme" id="Theme_bs05b"]
+default_font = ExtResource("7_wbn4l")
+
+[sub_resource type="Theme" id="Theme_aa3l3"]
+default_font = ExtResource("7_wbn4l")
+
+[sub_resource type="Theme" id="Theme_eswca"]
+default_font = ExtResource("7_wbn4l")
+
 [node name="root" type="Node3D"]
+script = SubResource("GDScript_x3mbx")
 
 [node name="grid_web" type="MeshInstance3D" parent="."]
 material_override = SubResource("ShaderMaterial_dcu7g")
@@ -108,14 +134,6 @@ mesh = SubResource("SphereMesh_r4iqt")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="sphere_smooth/StaticBody3D"]
 shape = SubResource("SphereShape3D_op1t5")
 
-[node name="mouse_cursor_set" type="Area3D" parent="."]
-input_ray_pickable = false
-script = ExtResource("8_h2c1u")
-cursor_shape = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="mouse_cursor_set"]
-shape = SubResource("SphereShape3D_k3uyv")
-
 [node name="color_control" type="Node3D" parent="."]
 script = ExtResource("2_ktw4g")
 
@@ -134,11 +152,23 @@ environment = SubResource("Environment_7dob8")
 transform = Transform3D(1, 0, 0, 0, 0.942682, 0.333692, 0, -0.333692, 0.942682, 0, 0, 0)
 script = ExtResource("4_8u2f7")
 
+[node name="tangent_plane" type="StaticBody3D" parent="camera_pivot"]
+unique_name_in_owner = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="camera_pivot/tangent_plane"]
+shape = SubResource("WorldBoundaryShape3D_fiort")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="camera_pivot/tangent_plane"]
+visible = false
+mesh = SubResource("QuadMesh_vbkcs")
+skeleton = NodePath("../../..")
+
 [node name="Camera3D" type="Camera3D" parent="camera_pivot"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.82478)
 current = true
 size = 1.2
+near = 0.01
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -151,6 +181,7 @@ offset_bottom = 40.0
 offset_top = 36.0
 offset_right = 68.0
 offset_bottom = 85.0
+theme = SubResource("Theme_3ok5r")
 theme_override_font_sizes/font_size = 35
 text = "HEX"
 
@@ -158,9 +189,11 @@ text = "HEX"
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 67.0
-offset_top = -4.0
+offset_top = -6.0
 offset_right = 203.0
-offset_bottom = 53.0
+offset_bottom = 51.0
+theme = SubResource("Theme_kf0ia")
+theme_override_colors/font_color = Color(0.588235, 0.588235, 0.588235, 1)
 theme_override_font_sizes/font_size = 35
 text = "HEX"
 editable = false
@@ -177,6 +210,7 @@ offset_left = 1.0
 offset_top = 68.0
 offset_right = 48.0
 offset_bottom = 100.0
+theme = SubResource("Theme_bs05b")
 theme_override_font_sizes/font_size = 23
 text = "RGB"
 
@@ -184,9 +218,11 @@ text = "RGB"
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 44.0
-offset_top = -4.0
+offset_top = -5.0
 offset_right = 136.0
-offset_bottom = 36.0
+offset_bottom = 35.0
+theme = SubResource("Theme_aa3l3")
+theme_override_colors/font_color = Color(0.588235, 0.588235, 0.588235, 1)
 theme_override_font_sizes/font_size = 23
 text = "R G B"
 editable = false
@@ -205,19 +241,36 @@ anchor_right = 1.0
 offset_left = -8.0
 offset_bottom = 8.0
 grow_horizontal = 0
+theme = SubResource("Theme_eswca")
 text = "Switch Camera Projection"
 
 [node name="sphere-Button" type="Button" parent="CanvasLayer"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -206.0
+offset_left = -245.0
 offset_top = 35.0
-offset_bottom = 66.0
+offset_bottom = 63.0
 grow_horizontal = 0
+theme = SubResource("Theme_eswca")
 text = "Switch Smooth/Flat"
 
-[connection signal="input_event" from="sphere_flat/StaticBody3D" to="color_control" method="handle_click"]
-[connection signal="input_event" from="sphere_smooth/StaticBody3D" to="color_control" method="handle_click"]
+[node name="NormalDisplay" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -32.0
+offset_right = 47.0
+grow_vertical = 0
+theme = SubResource("Theme_eswca")
+theme_override_colors/font_color = Color(0.588235, 0.588235, 0.588235, 1)
+theme_override_font_sizes/font_size = 23
+text = "Normal X Y Z"
+vertical_alignment = 1
+
+[connection signal="input_event" from="sphere_flat/StaticBody3D" to="color_control" method="handle_sphere_click"]
+[connection signal="input_event" from="sphere_smooth/StaticBody3D" to="color_control" method="handle_sphere_click"]
+[connection signal="input_event" from="camera_pivot/tangent_plane" to="color_control" method="handle_plane_click"]
 [connection signal="pressed" from="CanvasLayer/projection-Button" to="camera_pivot" method="change_perspective"]
 [connection signal="pressed" from="CanvasLayer/sphere-Button" to="color_control" method="toggle_spheres"]
